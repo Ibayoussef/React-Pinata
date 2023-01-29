@@ -1,0 +1,26 @@
+{
+  "name": "@smailbysf/pinata-package",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ibayoussef/React-Pinata.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ibayoussef/React-Pinata/issues"
+  },
+  "homepage": "https://github.com/Ibayoussef/React-Pinata#readme",
+  "dependencies": {
+    "axios": "^1.2.6",
+    "ethers": "^5.7.2",
+    "form-data": "^4.0.0",
+    "react": "^18.2.0",
+    "reat": "^0.0.1-security"
+  }
+}
