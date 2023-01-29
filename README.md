@@ -6,13 +6,9 @@ Pianata is a component that allows you to interact with the IPFS network via the
 
 In order to use Pianata, you'll need to install it first. Here's an example of how to install it using npm:
 
-Copy code
-
 `npm install react-pinata`
 
 You'll also need to install the following dependencies:
-
-cssCopy code
 
 `npm install axios
 npm install form-data
@@ -22,13 +18,9 @@ npm install ethers`
 
 To use Pianata, you'll need to import it in your code:
 
-pythonCopy code
-
 `import { Pianata } from 'pianata';`
 
 Then, you can use it like this:
-
-cssCopy code
 
 `<Pianata
   pinataKey={YOUR_PINATA_API_KEY}
