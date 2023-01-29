@@ -18,7 +18,7 @@ npm install ethers`
 
 To use Pianata, you'll need to import it in your code:
 
-`import { Pianata } from 'pianata';`
+`import { Pianata } from 'react-pinata';`
 
 Then, you can use it like this:
 
