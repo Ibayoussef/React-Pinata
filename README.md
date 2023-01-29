@@ -8,7 +8,7 @@ In order to use Pianata, you'll need to install it first. Here's an example of h
 
 Copy code
 
-`npm install pianata`
+`npm install react-pinata`
 
 You'll also need to install the following dependencies:
 

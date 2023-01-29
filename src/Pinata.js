@@ -12,7 +12,6 @@ export const Pianata = ({
   inputStyle,
   inputClassNames,
   buttonStyle,
-  buttonClassNames,
   NFTContractInteraction,
 }) => {
   const uploadFileToIPFS = async (file) => {
