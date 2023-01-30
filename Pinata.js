@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const FormData = require("form-data");
-const ethers = require("ethers");
 const React = require("react");
 const Pinata = ({
   pinataJWT,
@@ -15,7 +14,7 @@ const Pinata = ({
   inputClassNames,
   buttonStyle,
   NFTContractInteraction,
-  updateMessage,
+  setMetaDataUrl,
   wrapperStyle,
   setFileURL,
 }) => {
@@ -27,7 +26,7 @@ const Pinata = ({
     data.append("file", file);
     data.append("pinataMetadata", pinataMetaData);
     data.append("pinataOptions", pinataOptions);
-
+    let result;
     await axios
       .post(url, data, {
         maxBodyLength: "Infinity",
@@ -38,11 +37,11 @@ const Pinata = ({
       })
       .then(function (response) {
         console.log("image uploaded", response.data.IpfsHash);
-        console.log({
+        result = {
           success: true,
           pinataURL:
             "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash,
-        });
+        };
       })
       .catch(function (error) {
         console.log(error);
@@ -51,6 +50,7 @@ const Pinata = ({
           message: error.message,
         });
       });
+    return result;
   };
   //This function uploads the metadata to IPFS
   async function uploadMetadataToIPFS(nftDataJson) {
@@ -93,13 +93,9 @@ const Pinata = ({
     //Upload data to IPFS
     try {
       const metadataURL = await uploadMetadataToIPFS(nftDataJson);
-      //After adding your Hardhat network to your metamask, this code will get providers and signers
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      updateMessage("Please wait.. uploading (upto 5 mins)");
-
+      setMetaDataUrl(metadataURL);
       //Pull the deployed contract instance
-      NFTContractInteraction(metadataURL, signer);
+      await NFTContractInteraction();
     } catch (e) {
       alert("Upload error" + e);
     }
@@ -107,7 +103,7 @@ const Pinata = ({
   const uploadJSONToIPFS = async (JSONBody) => {
     const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`;
     //making axios POST request to Pinata ⬇️
-
+    let result;
     await axios
       .post(url, JSONBody, {
         headers: {
@@ -116,11 +112,11 @@ const Pinata = ({
         },
       })
       .then(function (response) {
-        console.log({
+        result = {
           success: true,
           pinataURL:
             "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash,
-        });
+        };
       })
       .catch(function (error) {
         console.log(error);
@@ -129,6 +125,7 @@ const Pinata = ({
           message: error.message,
         });
       });
+    return result;
   };
   async function OnChangeFile(e) {
     let file = e.target.files[0];
