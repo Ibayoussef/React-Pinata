@@ -65,6 +65,24 @@ export const Pinata = ({
       console.log("error uploading JSON metadata:", e);
     }
   }
+  const content = (
+    <div style={wrapperStyle}>
+      {formComponent}
+      <input
+        type={"file"}
+        style={inputStyle}
+        className={inputClassNames}
+        onChange={OnChangeFile}
+      ></input>
+      <button
+        onClick={listNFT}
+        style={buttonStyle}
+        className={buttonClassNames}
+      >
+        List NFT
+      </button>
+    </div>
+  );
   async function listNFT(e) {
     e.preventDefault();
 
@@ -122,22 +140,5 @@ export const Pinata = ({
       console.log("Error during file upload", e);
     }
   }
-  return (
-    <div style={wrapperStyle}>
-      {formComponent}
-      <input
-        type={"file"}
-        style={inputStyle}
-        className={inputClassNames}
-        onChange={OnChangeFile}
-      ></input>
-      <button
-        onClick={listNFT}
-        style={buttonStyle}
-        className={buttonClassNames}
-      >
-        List NFT
-      </button>
-    </div>
-  );
+  return content;
 };
