@@ -2,9 +2,10 @@
   "name": "react-pinata",
   "version": "1.0.13",
   "description": "",
-  "main": "index.js",
+  "main": "lib/Pinata.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "babel src -d lib"
   },
   "repository": {
     "type": "git",
