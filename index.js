@@ -1,2 +1,2 @@
-import { Pinata } from "./Pinata";
+import { Pinata } from "./src/Pinata";
 module.exports = Pinata;
