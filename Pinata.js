@@ -1,7 +1,7 @@
 const axios = require("axios");
 const FormData = require("form-data");
 const ethers = require("ethers");
-
+const React = require("react");
 require("@babel/core").transformSync(Pinata, {
   plugins: ["@babel/plugin-syntax-jsx"],
 });

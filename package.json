@@ -5,7 +5,7 @@
   "main": "lib/Pinata.js",
   "scripts": {
     "test": "jest",
-    "build": "babel src -d lib"
+    "build": "babel Pinata.js -d lib"
   },
   "repository": {
     "type": "git",
