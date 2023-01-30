@@ -55,7 +55,7 @@ const Pinata = ({
       });
   };
   //This function uploads the metadata to IPFS
-  async function uploadMetadataToIPFS() {
+  async function uploadMetadataToIPFS(nftDataJson) {
     try {
       //upload the metadata JSON to IPFS
       const response = await uploadJSONToIPFS(nftDataJson);
@@ -90,7 +90,7 @@ const Pinata = ({
 
     //Upload data to IPFS
     try {
-      const metadataURL = await uploadMetadataToIPFS();
+      const metadataURL = await uploadMetadataToIPFS(nftDataJson);
       //After adding your Hardhat network to your metamask, this code will get providers and signers
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
