@@ -1,7 +1,7 @@
 const axios = require("axios");
 const FormData = require("form-data");
 const ethers = require("ethers");
-export const Pianata = ({
+export const Pinata = ({
   pinataKey,
   pinataSecret,
   buttonClassNames,
@@ -13,6 +13,7 @@ export const Pianata = ({
   inputClassNames,
   buttonStyle,
   NFTContractInteraction,
+  updateMessage,
 }) => {
   const uploadFileToIPFS = async (file) => {
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
@@ -75,7 +76,7 @@ export const Pianata = ({
       updateMessage("Please wait.. uploading (upto 5 mins)");
 
       //Pull the deployed contract instance
-      NFTContractInteraction();
+      NFTContractInteraction(metadataURL, signer);
     } catch (e) {
       alert("Upload error" + e);
     }
@@ -86,8 +87,8 @@ export const Pianata = ({
     return axios
       .post(url, JSONBody, {
         headers: {
-          pinata_api_key: key,
-          pinata_secret_api_key: secret,
+          pinata_api_key: pinataKey,
+          pinata_secret_api_key: pinataSecret,
         },
       })
       .then(function (response) {
