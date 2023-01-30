@@ -1,6 +1,7 @@
 const axios = require("axios");
 const FormData = require("form-data");
 const ethers = require("ethers");
+import react from "react";
 export const Pinata = ({
   pinataKey,
   pinataSecret,
