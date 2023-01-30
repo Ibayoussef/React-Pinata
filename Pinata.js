@@ -1,8 +1,11 @@
 const axios = require("axios");
 const FormData = require("form-data");
 const ethers = require("ethers");
-import react from "react";
-export const Pinata = ({
+
+require("@babel/core").transformSync(Pinata, {
+  plugins: ["@babel/plugin-syntax-jsx"],
+});
+const Pinata = ({
   pinataKey,
   pinataSecret,
   buttonClassNames,
@@ -143,3 +146,4 @@ export const Pinata = ({
   }
   return content;
 };
+module.exports = Pinata;
