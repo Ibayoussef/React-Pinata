@@ -1,10 +1,11 @@
-const axios = require("axios");
+import axios from "axios";
+
 const FormData = require("form-data");
 const ethers = require("ethers");
 const React = require("react");
 const Pinata = ({
-  pinataKey,
-  pinataSecret,
+  pinataJWT,
+
   buttonClassNames,
   formComponent,
   pinataOptions,
@@ -15,9 +16,10 @@ const Pinata = ({
   buttonStyle,
   NFTContractInteraction,
   updateMessage,
-  wrapperStyle
+  wrapperStyle,
+  setFileURL,
 }) => {
-  const uploadFileToIPFS = async file => {
+  const uploadFileToIPFS = async (file) => {
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
     //making axios POST request to Pinata ⬇️
 
@@ -25,26 +27,30 @@ const Pinata = ({
     data.append("file", file);
     data.append("pinataMetadata", pinataMetaData);
     data.append("pinataOptions", pinataOptions);
-    return axios.post(url, data, {
-      maxBodyLength: "Infinity",
-      headers: {
-        "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-        pinata_api_key: pinataKey,
-        pinata_secret_api_key: pinataSecret
-      }
-    }).then(function (response) {
-      console.log("image uploaded", response.data.IpfsHash);
-      return {
-        success: true,
-        pinataURL: "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash
-      };
-    }).catch(function (error) {
-      console.log(error);
-      return {
-        success: false,
-        message: error.message
-      };
-    });
+
+    await axios
+      .post(url, data, {
+        maxBodyLength: "Infinity",
+        headers: {
+          "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
+          Authorization: "Bearer " + pinataJWT,
+        },
+      })
+      .then(function (response) {
+        console.log("image uploaded", response.data.IpfsHash);
+        console.log({
+          success: true,
+          pinataURL:
+            "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+        console.log({
+          success: false,
+          message: error.message,
+        });
+      });
   };
   //This function uploads the metadata to IPFS
   async function uploadMetadataToIPFS(nftDataJson) {
@@ -59,18 +65,28 @@ const Pinata = ({
       console.log("error uploading JSON metadata:", e);
     }
   }
-  const content = /*#__PURE__*/React.createElement("div", {
-    style: wrapperStyle
-  }, formComponent, /*#__PURE__*/React.createElement("input", {
-    type: "file",
-    style: inputStyle,
-    className: inputClassNames,
-    onChange: OnChangeFile
-  }), /*#__PURE__*/React.createElement("button", {
-    onClick: listNFT,
-    style: buttonStyle,
-    className: buttonClassNames
-  }, "List NFT"));
+  const content = /*#__PURE__*/ React.createElement(
+    "div",
+    {
+      style: wrapperStyle,
+    },
+    formComponent,
+    /*#__PURE__*/ React.createElement("input", {
+      type: "file",
+      style: inputStyle,
+      className: inputClassNames,
+      onChange: OnChangeFile,
+    }),
+    /*#__PURE__*/ React.createElement(
+      "button",
+      {
+        onClick: listNFT,
+        style: buttonStyle,
+        className: buttonClassNames,
+      },
+      "List NFT"
+    )
+  );
   async function listNFT(e) {
     e.preventDefault();
 
@@ -88,26 +104,31 @@ const Pinata = ({
       alert("Upload error" + e);
     }
   }
-  const uploadJSONToIPFS = async JSONBody => {
+  const uploadJSONToIPFS = async (JSONBody) => {
     const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`;
     //making axios POST request to Pinata ⬇️
-    return axios.post(url, JSONBody, {
-      headers: {
-        pinata_api_key: pinataKey,
-        pinata_secret_api_key: pinataSecret
-      }
-    }).then(function (response) {
-      return {
-        success: true,
-        pinataURL: "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash
-      };
-    }).catch(function (error) {
-      console.log(error);
-      return {
-        success: false,
-        message: error.message
-      };
-    });
+
+    await axios
+      .post(url, JSONBody, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + pinataJWT,
+        },
+      })
+      .then(function (response) {
+        console.log({
+          success: true,
+          pinataURL:
+            "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+        console.log({
+          success: false,
+          message: error.message,
+        });
+      });
   };
   async function OnChangeFile(e) {
     let file = e.target.files[0];
@@ -125,4 +146,4 @@ const Pinata = ({
   }
   return content;
 };
-module.exports = Pinata;
+export default Pinata;
