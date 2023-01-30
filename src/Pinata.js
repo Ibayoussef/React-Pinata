@@ -14,6 +14,7 @@ export const Pinata = ({
   buttonStyle,
   NFTContractInteraction,
   updateMessage,
+  wrapperStyle,
 }) => {
   const uploadFileToIPFS = async (file) => {
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
@@ -122,7 +123,7 @@ export const Pinata = ({
     }
   }
   return (
-    <>
+    <div style={wrapperStyle}>
       {formComponent}
       <input
         type={"file"}
@@ -137,6 +138,6 @@ export const Pinata = ({
       >
         List NFT
       </button>
-    </>
+    </div>
   );
 };
